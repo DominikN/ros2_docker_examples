@@ -19,6 +19,7 @@ class MoveControllerNode(Node):
         msg.linear.x = 2.0
         msg.angular.z =0.3*math.pi
 
+        # self.get_logger().info("publishing to turtle1/cmd_vel")
         self.cmd_vel_publisher_.publish(msg)
 
 def main(args=None):
