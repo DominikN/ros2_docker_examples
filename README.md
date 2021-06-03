@@ -15,7 +15,7 @@ ros2 launch my_turtle_bringup turtlesim_demo.launch.py
 
 ## Run in a single container
 
-**Please stay in `ros2_docker_examples/` directory while executing those commands:
+**Please stay in `ros2_docker_examples/` directory while executing those commands:**
 
 ```
 sudo chmod +x eg1/init-container.sh
