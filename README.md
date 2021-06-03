@@ -30,3 +30,11 @@ docker run --rm -it \
 --volume /tmp/.X11-unix:/tmp/.X11-unix:rw \
 turtle_demo
 ```
+
+## Run in two container (using `docker-compose`)
+
+```bash
+cd eg2
+docker-compose up
+```
+
