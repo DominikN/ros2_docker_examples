@@ -5,7 +5,7 @@ services:
         build:
             context: ../
             dockerfile: eg2/Dockerfile
-    turtle:
+    turtle_sim:
         image: osrf/ros:foxy-desktop
         environment: 
             - DISPLAY

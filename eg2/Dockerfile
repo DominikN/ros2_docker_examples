@@ -12,8 +12,8 @@ RUN cd ros2_ws && \
     source /opt/ros/foxy/setup.bash && \
     colcon build
 
-COPY eg1/ros_entrypoint.sh /
-COPY eg1/init-container.sh /opt
+COPY eg2/ros_entrypoint.sh /
+COPY eg2/init-container.sh /opt
 
 USER user1
 

@@ -1,0 +1,25 @@
+version: "2.3"  # https://docs.docker.com/compose/compose-file/
+
+services:
+    turtle_sim:
+        build:
+            context: ../../
+            dockerfile: eg3/dev2/Dockerfile
+        volumes:
+            - husarnet-id2-v:/var/lib/husarnet  # This will persist your Husarnet Client keys, thus IP of the container will be stable/the same between boots
+            - /tmp/.X11-unix:/tmp/.X11-unix:rw
+        environment: 
+            - DISPLAY
+        env_file: 
+            - ./.env  # create .env file in the same folder as Dockerfile and specify HOSTNAME and JOINCODE there
+        sysctls:
+            - net.ipv6.conf.all.disable_ipv6=0
+        cap_add: 
+            - NET_ADMIN
+        devices:  
+            - /dev/net/tun
+        stdin_open: true # docker run -i
+        tty: true        # docker run -t
+
+volumes:
+    husarnet-id2-v:

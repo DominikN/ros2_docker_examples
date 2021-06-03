@@ -38,3 +38,22 @@ cd eg2
 docker-compose up
 ```
 
+## Run on two separate computers over VPN
+
+tip: to access shell of running container:
+
+```
+docker exec -it <container_id> bash
+```
+
+```bash
+cd eg3/dev1
+docker-compose build
+docker-compose up
+```
+
+```bash
+cd eg3/dev2
+docker-compose build
+docker-compose up
+```
