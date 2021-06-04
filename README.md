@@ -134,7 +134,7 @@ Congrats! You have everything up and running.
 ![without docker](docs/screenshot.png)
 
 
-## [Sollution 2] Connect container on your laptop with turtlesim in the ROSject
+## [Solution 2] Connect container on your laptop with turtlesim in the ROSject
 
 ![without docker](docs/fig5-sollution.png)
 
@@ -146,6 +146,8 @@ cd eg3/dev1
 docker-compose build
 docker-compose up
 ```
+
+and copy the container's Husarnet IPv6 address from an output log (or from a app.husarnet.com)
 
 ### ROSject
 
@@ -159,25 +161,89 @@ sudo husarnet daemon
 
 #### Terminal 2
 
+##### 1. Connect your ROSject to Husarnet network:
+
 ```bash
 sudo husarnet join <joincode> rosject1
+```
 
+Copy your ROSject's Husarnet IPv6 address to this part of `eg3/dev1/cyclonedds.xml` file:
+
+```xml
+<Peers>
+    <Peer address="[fc94:c37a:c18e:bc90:9b0b:7144:f212:9743]"/>
+</Peers>
+```
+
+##### 2. Install and configure Cyclone DDS
+
+```
 sudo apt update
 sudo apt install ros-foxy-rmw-cyclonedds-cpp
-
+cd ~
+touch cyclonedds.xml
 ```
 
-// create `/user/ros2_ws/src/cyclonedds/cyclonedds.xml` file and place peer address
+Copy the following XML to the `cyclonedds.xml`:
 
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<CycloneDDS xmlns="https://cdds.io/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/master/etc/cyclonedds.xsd">
+    <Domain id="any">
+        <General>
+            <NetworkInterfaceAddress>auto</NetworkInterfaceAddress>
+            <AllowMulticast>false</AllowMulticast>
+            <MaxMessageSize>65500B</MaxMessageSize>
+            <FragmentSize>4000B</FragmentSize>
+            <Transport>udp6</Transport>
+        </General>      
+        <Discovery>
+            <Peers>
+                <Peer address="[fc94:c37a:c18e:bc90:9b0b:7144:f212:9743]"/>
+            </Peers>
+            <ParticipantIndex>auto</ParticipantIndex>
+        </Discovery>
+        <Internal>
+            <Watermarks>
+                <WhcHigh>500kB</WhcHigh>
+            </Watermarks>
+        </Internal>
+        <Tracing>
+            <Verbosity>severe</Verbosity>
+            <OutputFile>stdout</OutputFile>
+        </Tracing>
+    </Domain>
+</CycloneDDS>
+```
 
+In this line place the IPv6 address of the running container from your laptop.
+
+```xml
+<Peer address="[fc94:c37a:c18e:bc90:9b0b:7144:f212:9743]"/>
 ```
-ros2 doctor --report
-```
+
+Save file and execute in the terminal:
 
 ```bash
 source /opt/ros/foxy/setup.bash
 export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 export CYCLONEDDS_URI=file:///home/user/ros2_ws/src/cyclonedds/cyclonedds.xml
+```
 
+##### 3. Run the turtlesim node
+
+```bash
 ros2 run turtlesim turtlesim_node
 ```
+
+and on your laptop start the container:
+
+```bash
+cd eg3/dev1
+docker-compose build
+docker-compose run
+```
+
+In the ROSject (after you click `[Graphical tools]` button ) you will see:
+
+![without docker](docs/screenshot.png)
