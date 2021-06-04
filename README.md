@@ -221,7 +221,7 @@ cd ~
 touch cyclonedds.xml
 ```
 
-Copy the following XML to the `cyclonedds.xml`:
+Copy the following XML to the `cyclonedds.xml` (in the ROSject):
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -236,7 +236,7 @@ Copy the following XML to the `cyclonedds.xml`:
         </General>      
         <Discovery>
             <Peers>
-                <Peer address="[fc94:c37a:c18e:bc90:9b0b:7144:f212:9743]"/>
+                <Peer address="[fc94:f6ad:cabc:a059:2050:9b3b:7a7f:7524]"/>
             </Peers>
             <ParticipantIndex>auto</ParticipantIndex>
         </Discovery>
@@ -256,7 +256,7 @@ Copy the following XML to the `cyclonedds.xml`:
 In this line place the IPv6 address of the running container from your laptop.
 
 ```xml
-<Peer address="[fc94:c37a:c18e:bc90:9b0b:7144:f212:9743]"/>
+<Peer address="[fc94:f6ad:cabc:a059:2050:9b3b:7a7f:7524]"/>
 ```
 
 Save file and execute in the terminal:
