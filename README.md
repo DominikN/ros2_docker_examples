@@ -116,7 +116,7 @@ Then go to `eg3/dev1/` folder on first machine, and `eg3/dev2` folder on second 
 docker-compose up
 ```
 
-You will se the following output log:
+You will see the following output log:
 
 ```bash
 dominik@legion-y540:~/tech/ros2_docker_examples/eg3/dev1$ docker-compose up
