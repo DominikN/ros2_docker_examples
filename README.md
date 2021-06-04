@@ -139,7 +139,7 @@ Congrats! You have everything up and running.
 ![without docker](docs/fig5-sollution.png)
 
 
-### laptop
+### Part to do on your laptop
 
 ```bash
 cd eg3/dev1
@@ -149,7 +149,7 @@ docker-compose up
 
 and copy the container's Husarnet IPv6 address from an output log (or from a app.husarnet.com)
 
-### ROSject
+### Part to do in the ROSject
 
 Create a new ROSject and run:
 
