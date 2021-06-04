@@ -1,6 +1,6 @@
 # ros2_docker_examples
 
-## Run without Docker
+## [Eg. 0] Run without Docker
 
 ![without docker](docs/fig1-system-architecture.png)
 
@@ -15,7 +15,7 @@ ros2 launch my_turtle_bringup turtlesim_demo.launch.py
 ```
 
 
-## Run in a single container
+## [Eg. 1] Run in a single container
 
 ![without docker](docs/fig2-one-container.png)
 
@@ -35,7 +35,7 @@ docker run --rm -it \
 turtle_demo
 ```
 
-## Run in two containers (using `docker-compose`)
+## [Eg. 2] Run in two containers (using `docker-compose`)
 
 ![without docker](docs/fig3-two-containers.png)
 
@@ -44,7 +44,7 @@ cd eg2
 docker-compose up
 ```
 
-## [PROBLEM] Runing on two computers in different networks
+## [Eg. 3] PROBLEM: Runing on two computers in different networks
 
 ![without docker](docs/fig4-two-containers-two-networks.png)
 
@@ -52,7 +52,7 @@ Because two ROS 2 devices are in different networks, DDS can not perform auto-di
 
 Also devices can not reach each other because they do not have nor public nor static IP addresses and are behind Wi-Fi router NAT. 
 
-## [Sollution 1] Connect ROS 2 machines using VPN
+## [Eg. 3] SOLUTION 1: Connect ROS 2 machines using VPN
 
 To enable communication between remote containers we need to do two things:
 
@@ -134,7 +134,7 @@ Congrats! You have everything up and running.
 ![without docker](docs/screenshot.png)
 
 
-## [Solution 2] Connect container on your laptop with turtlesim in the ROSject
+## [Eg. 3] SOLUTION 2: Connect container on your laptop with turtlesim in the ROSject
 
 ![without docker](docs/fig5-sollution.png)
 
