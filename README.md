@@ -40,7 +40,7 @@ sudo systemctl restart docker
 ROS 2 Foxy installed on your laptop is needed only for **[Eg. 0]** section.
 
 
-## [Eg. 0] Run without Docker
+## [Eg. 0] Running without Docker
 
 ![without docker](docs/fig1-system-architecture.png)
 
@@ -55,7 +55,7 @@ ros2 launch my_turtle_bringup turtlesim_demo.launch.py
 ```
 
 
-## [Eg. 1] Run in a single container
+## [Eg. 1] Running in a single container
 
 ![without docker](docs/fig2-one-container.png)
 
@@ -75,7 +75,7 @@ docker run --rm -it \
 turtle_demo
 ```
 
-## [Eg. 2] Run in two containers (using `docker-compose`)
+## [Eg. 2] Running in two containers (using `docker-compose`)
 
 ![without docker](docs/fig3-two-containers.png)
 
