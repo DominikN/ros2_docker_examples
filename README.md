@@ -1,5 +1,11 @@
 # ros2_docker_examples
 
+This repo shows different ways to deal with ROS 2 node interconnectivity depending whether you:
+
+- use them on a single machine or on multiple machines
+- using with or without docker
+- connecting over LAN or WAN
+
 ## [Eg. 0] Run without Docker
 
 ![without docker](docs/fig1-system-architecture.png)
