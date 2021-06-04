@@ -264,7 +264,7 @@ Save file and execute in the terminal:
 ```bash
 source /opt/ros/foxy/setup.bash
 export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-export CYCLONEDDS_URI=file:///home/user/ros2_ws/src/cyclonedds/cyclonedds.xml
+export CYCLONEDDS_URI=file:///home/user/cyclonedds.xml
 ```
 
 ##### 3. Running the turtlesim node
