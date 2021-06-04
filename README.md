@@ -6,6 +6,16 @@ This repo shows different ways to deal with ROS 2 node interconnectivity dependi
 - use with or without docker
 - connect ROS 2 Nodes over LAN or WAN
 
+To focus just on connectivity, and not on running the fancy ROS 2 software or robots in Gazebo, I will go through different scenarios basing on the dead simple ROS 2 system containing 3 nodes:
+
+- `/turtlesim` - a very, very simple, simulator for learning ROS where you simulate ... a turtle :)
+- `/move_controller` - is controlling a turtle move
+- `/color_controller` - every one second is changing the color of the line drawn by a turtle
+
+The solution is scalable, so what you will learn can be applied in very complex distributed ROS 2 systems as well!
+
+Below, there are 4 example use cases using the same code base, but being launched in different architecture scenarios.
+
 ## [Eg. 0] Run without Docker
 
 ![without docker](docs/fig1-system-architecture.png)
