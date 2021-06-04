@@ -1,20 +1,44 @@
 # ros2_docker_examples
 
-This repo shows different ways to deal with ROS 2 node interconnectivity depending whether you:
+This repo shows few different ways to deal with ROS 2 node interconnectivity depending whether you:
 
-- use them on a single machine or on multiple machines
-- use with or without docker
-- connect ROS 2 Nodes over LAN or WAN
+- use nodes on a single machine or on multiple machines
+- use nodes with or without docker
+- connect ROS 2 nodes over LAN or WAN
 
-To focus just on connectivity, and not on running the fancy ROS 2 software or robots in Gazebo, I will go through different scenarios basing on the dead simple ROS 2 system containing 3 nodes:
+To focus purely on connectivity, not on running fancy ROS 2 software or robots in Gazebo, I will go through different scenarios based on a simple ROS 2 system containing of 3 nodes:
 
-- `/turtlesim` - a very, very simple, simulator for learning ROS where you simulate ... a turtle :)
-- `/move_controller` - is controlling a turtle move
-- `/color_controller` - every one second is changing the color of the line drawn by a turtle
+- `/turtlesim` - a very simple, simulator for learning ROS where you simulate ... a turtle :)
+- `/move_controller` - node for controlling the movement of the turtle
+- `/color_controller` - node that is changing the color of the line drawn by a turtle each second
 
 The solution is scalable, so what you will learn can be applied in very complex distributed ROS 2 systems as well!
 
-Below, there are 4 example use cases using the same code base, but being launched in different architecture scenarios.
+Below, there are 4 example use cases using the same code base, launched in different architecture scenarios.
+
+-------------
+## Before you start ...
+
+Make sure you have Docker and Docker-Compose installed on your laptop. 
+
+[The official instruction](https://docs.docker.com/get-docker/) is the best tutorial but here's a quick rundown for you (for Linux):
+
+```bash
+sudo -E apt-get -y install apt-transport-https ca-certificates software-properties-common && \
+curl -sL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - && \
+arch=$(dpkg --print-architecture) && \
+sudo -E add-apt-repository "deb [arch=${arch}] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" && \
+sudo -E apt-get update && \
+sudo -E apt-get -y install docker-ce docker-compose
+```
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+```
+
+ROS 2 Foxy installed on your laptop is needed only for **[Eg. 0]** section.
+
 
 ## [Eg. 0] Run without Docker
 
@@ -66,28 +90,25 @@ docker-compose up
 
 Because two ROS 2 devices are in different networks, DDS can not perform auto-discovery.
 
-Also devices can not reach each other because they do not have nor public nor static IP addresses and are behind Wi-Fi router NAT. 
+Also devices can not reach each other because they do not have neither public nor static IP addresses and are behind Wi-Fi router NAT.
 
-## [Eg. 3] SOLUTION 1: Connect ROS 2 machines using VPN
+## [Eg. 3] SOLUTION 1: Connecting ROS 2 machines using VPN
 
 To enable communication between remote containers we need to do two things:
 
 - install & configure Husarnet VPN client
-- create a custom DDS confiugration file 
+- create a custom DDS confiugration file
 
-Ready to use example is available in `eg3/` folder. There are two separate subfolders with a `docker-compose.yml` file to be launched on two separate devices from different networks.
+Ready to use example is available in `eg3/` folder. There are two separate subfolders with a `docker-compose.yml` file which should be launched on two separate devices from different networks.
 
-### connect containers to the same VPN network
+### Connecting containers to the same VPN network
 
-At first modify `eg3/dev1/.env` and `eg3/dev2/.env` files by providing the same Husarnet network Join Code there. To find your joincode go to:
+At first modify `eg3/dev1/.env` and `eg3/dev2/.env` files by providing the same Husarnet network Join Code there. 
 
--> app.husarnet.com 
-
--> choosen network (or create a new) 
-
--> click **[Add element]** button 
-
--> copy the join code to a clipboard.
+You will find your Join Code at **https://app.husarnet.com  
+ -> Click on the desired network  
+ -> `Add element` button  
+ -> `Join Code` tab** 
 
 Then go to `eg3/dev1/` folder on first machine, and `eg3/dev2` folder on second machine and execute:
 
@@ -119,11 +140,11 @@ turtle_controller_1  | IPv6 addr of this container is: fc94:a2cd:168a:1c7b:a135:
 turtle_controller_1  | *******************************************
 ```
 
-containing a IPv6 address of the device `fc94:a2cd:168a:1c7b:a135:e22f:e172:892f`. You will use that address to configure a Cyclone DDS in the next step.
+It will contain a IPv6 address of the device (like `fc94:a2cd:168a:1c7b:a135:e22f:e172:892f` from the log above). You will use that address to configure a Cyclone DDS in the next step.
 
-You can shutdown container now by **[ctrl + c]**
+You can shutdown the container now by clicking **[ctrl + c]**
 
-### Configure a cyclone DDS
+### Configuring a Cyclone DDS
 
 In `cyclonedds.xml` file we need to specify a Husarnet VPN IPv6 address of all peers. So in `eg3/dev1/cyclonedds.xml` file you need to specify IPv6 addres of `dev1` device:
 
@@ -135,7 +156,7 @@ In `cyclonedds.xml` file we need to specify a Husarnet VPN IPv6 address of all p
 
 Similarly modify `eg3/dev2/cyclonedds.xml` by specifying Husarnet IPv6 addr of `dev1` there.
 
-### Run the containers:
+### Running the containers:
 
 Now go to `eg3/dev1/` and `eg3/dev2/` folders on two machines and run:
 
@@ -150,12 +171,12 @@ Congrats! You have everything up and running.
 ![without docker](docs/screenshot.png)
 
 
-## [Eg. 3] SOLUTION 2: Connect container on your laptop with turtlesim in the ROSject
+## [Eg. 3] SOLUTION 2: Connecting container on your laptop with turtlesim in the ROSject
 
 ![without docker](docs/fig5-sollution.png)
 
 
-### Part to do on your laptop
+### TO DO on your laptop
 
 ```bash
 cd eg3/dev1
@@ -165,7 +186,7 @@ docker-compose up
 
 and copy the container's Husarnet IPv6 address from an output log (or from a app.husarnet.com)
 
-### Part to do in the ROSject
+### TO DO in the ROSject
 
 Create a new ROSject and run:
 
@@ -177,7 +198,7 @@ sudo husarnet daemon
 
 #### Terminal 2
 
-##### 1. Connect your ROSject to Husarnet network:
+##### 1. Connecting your ROSject to the Husarnet network:
 
 ```bash
 sudo husarnet join <joincode> rosject1
@@ -191,7 +212,7 @@ Copy your ROSject's Husarnet IPv6 address to this part of `eg3/dev1/cyclonedds.x
 </Peers>
 ```
 
-##### 2. Install and configure Cyclone DDS
+##### 2. Installing and configuring Cyclone DDS
 
 ```
 sudo apt update
@@ -246,7 +267,7 @@ export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 export CYCLONEDDS_URI=file:///home/user/ros2_ws/src/cyclonedds/cyclonedds.xml
 ```
 
-##### 3. Run the turtlesim node
+##### 3. Running the turtlesim node
 
 ```bash
 ros2 run turtlesim turtlesim_node
