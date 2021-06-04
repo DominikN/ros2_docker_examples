@@ -84,7 +84,7 @@ cd eg2
 docker-compose up
 ```
 
-## [Eg. 3] PROBLEM: Runing on two computers in different networks
+## [Eg. 3] PROBLEM: Running on two computers in different networks
 
 ![without docker](docs/fig4-two-containers-two-networks.png)
 
