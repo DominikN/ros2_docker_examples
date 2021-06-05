@@ -12,11 +12,6 @@ RUN sudo apt update && \
     ros-foxy-rmw-cyclonedds-cpp 
 RUN sudo rm -rf /var/lib/apt/lists/*
 
-# Create a new user "user1"
-RUN useradd -ms /bin/bash user1 && usermod -aG sudo user1 && echo 'user1     ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-
-WORKDIR /home/user1
-
 # build custom ROS 2 nodes
 COPY ros2_ws ros2_ws/
 RUN cd ros2_ws && \
@@ -25,8 +20,6 @@ RUN cd ros2_ws && \
 
 COPY eg4/dev1/ros_entrypoint.sh /
 COPY eg4/dev1/cyclonedds.xml /
-
-USER user1
 
 ENTRYPOINT ["/ros_entrypoint.sh"]   
 CMD ["bash"]
