@@ -160,7 +160,9 @@ Similarly modify `eg3/dev2/cyclonedds.xml` by specifying Husarnet IPv6 addr of `
 
 Now go to `eg3/dev1/` and `eg3/dev2/` folders on two machines and run:
 
-```
+```bash
+xhost local:root # remember about this line on dev2
+
 cd eg3/dev2
 docker-compose build
 docker-compose up

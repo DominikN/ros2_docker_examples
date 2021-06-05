@@ -10,7 +10,7 @@
         </General>      
         <Discovery>
             <Peers>
-                <Peer address="[fc94:a3ea:6ff1:cf7a:a763:38c1:3188:bd2e]"/>
+                <Peer address="turtlesim-1"/>
             </Peers>
             <ParticipantIndex>auto</ParticipantIndex>
         </Discovery>
