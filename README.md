@@ -315,7 +315,7 @@ docker-compose up
 
 ### DEVICE 2
 
-Clone this repo to the first device, then execute in the terminal:
+Clone this repo to the second device, then execute in the terminal:
 
 ```bash
 cd ros2_docker_examples/eg4/dev2
