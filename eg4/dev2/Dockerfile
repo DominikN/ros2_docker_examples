@@ -10,8 +10,8 @@ RUN sudo apt update && \
     ros-foxy-rmw-cyclonedds-cpp 
 RUN sudo rm -rf /var/lib/apt/lists/*
 
-COPY ros_entrypoint.sh /
 COPY cyclonedds.xml /
+COPY ros_entrypoint.sh /
 
 ENTRYPOINT ["/ros_entrypoint.sh"]   
 CMD ["bash"]

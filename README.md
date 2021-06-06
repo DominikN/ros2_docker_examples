@@ -286,3 +286,45 @@ docker-compose run
 In the ROSject (after you click `[Graphical tools]` button ) you will see:
 
 ![without docker](docs/screenshot.png)
+
+## [Eg. 4] Use a separate VPN container
+
+Instead of modyfing your own containers, you can launch a separate official [Husarnet VPN container](https://hub.docker.com/r/husarnet/husarnet) next to your existing app container.
+
+`hnet0` network interface from Husarnet container is shared with any container you specify in the `docker-compose.yml`. Thanks to that without modyfying your exisitng container with ROS 2 nodes, you can connect them with remote nodes without any effor.
+
+Moreover instead of long IPv6 addresses you can use Husarnet hostnames of the Husarnet Container (specified in `eg4/dev*/.env` files).
+
+![without docker](docs/fig5-sollution.png)
+
+That's a truely zero effort solution that simply works.
+
+TL;DR:
+
+### DEVICE 1
+
+Clone this repo to the first device, then execute in the terminal:
+
+```bash
+cd ros2_docker_examples/eg4/dev1
+
+# add your own join code to the .env file now
+
+docker-compose up
+```
+
+### DEVICE 2
+
+Clone this repo to the first device, then execute in the terminal:
+
+```bash
+cd ros2_docker_examples/eg4/dev2
+
+# add your own join code to the .env file now
+
+docker-compose up
+```
+
+### Result:
+
+![without docker](docs/fig5-sollution.png)

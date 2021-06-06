@@ -18,8 +18,8 @@ RUN cd ros2_ws && \
     source /opt/ros/foxy/setup.bash && \
     colcon build
 
-COPY eg4/dev1/ros_entrypoint.sh /
 COPY eg4/dev1/cyclonedds.xml /
+COPY eg4/dev1/ros_entrypoint.sh /
 
 ENTRYPOINT ["/ros_entrypoint.sh"]   
 CMD ["bash"]
