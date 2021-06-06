@@ -309,6 +309,10 @@ Clone this repo to the first device, then execute in the terminal:
 cd ros2_docker_examples/eg4/dev1
 
 # add your own join code to the .env file now
+# example .env file content:
+#
+# JOINCODE=fc94:b01d:1803:8dd8:b293:5c7d:7639:932a/tTZtwiqM59iXtnCWABUEKH
+# HOSTNAME=turtle-controller-1
 
 docker-compose up
 ```
@@ -321,6 +325,10 @@ Clone this repo to the second device, then execute in the terminal:
 cd ros2_docker_examples/eg4/dev2
 
 # add your own join code to the .env file now
+# example .env file content:
+#
+# JOINCODE=fc94:b01d:1803:8dd8:b293:5c7d:7639:932a/tTZtwiqM59iXtnCWABUEKH
+# HOSTNAME=turtlesim-1
 
 docker-compose up
 ```
