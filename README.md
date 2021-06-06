@@ -310,8 +310,8 @@ Clone this repo to the first device, then execute in the terminal:
 ```bash
 cd ros2_docker_examples/eg4/dev1
 
-# add your own join code to the .env file now
-# example .env file content:
+# Add your own join code to the .env file in the current directory.
+# Example .env file content:
 #
 # JOINCODE=fc94:b01d:1803:8dd8:b293:5c7d:7639:932a/tTZtwiqM59iXtnCWABUEKH
 # HOSTNAME=turtle-controller-1
@@ -326,8 +326,8 @@ Clone this repo to the second device, then execute in the terminal:
 ```bash
 cd ros2_docker_examples/eg4/dev2
 
-# add your own join code to the .env file now
-# example .env file content:
+# Add your own join code to the .env file in the current directory.
+# Example .env file content:
 #
 # JOINCODE=fc94:b01d:1803:8dd8:b293:5c7d:7639:932a/tTZtwiqM59iXtnCWABUEKH
 # HOSTNAME=turtlesim-1
