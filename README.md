@@ -295,7 +295,7 @@ Instead of modyfing your own containers, you can launch a separate official [Hus
 
 Moreover instead of long IPv6 addresses you can use Husarnet hostnames of the Husarnet Container (specified in `eg4/dev*/.env` files).
 
-![without docker](docs/fig5-sollution.png)
+![without docker](docs/fig6-sidecar-husarnet.png)
 
 That's a truely zero effort solution that simply works.
 
