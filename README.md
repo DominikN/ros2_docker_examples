@@ -289,7 +289,7 @@ In the ROSject (after you click `[Graphical tools]` button ) you will see:
 
 ![turtlesim window](docs/screenshot.png)
 
-## [Eg. 4] Use a separate VPN container
+## [Eg. 4] Using a separate VPN container
 
 Instead of modyfing your own containers, you can launch a separate official [Husarnet VPN container](https://hub.docker.com/r/husarnet/husarnet) next to your existing app container.
 
