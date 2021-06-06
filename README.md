@@ -327,4 +327,4 @@ docker-compose up
 
 ### Result:
 
-![without docker](docs/fig5-sollution.png)
+![without docker](docs/screenshot.png)
