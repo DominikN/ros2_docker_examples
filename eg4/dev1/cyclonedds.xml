@@ -11,6 +11,7 @@
         <Discovery>
             <Peers>
                 <Peer address="turtlesim-1"/>
+                <Peer address="rosject1"/>
             </Peers>
             <ParticipantIndex>auto</ParticipantIndex>
         </Discovery>
