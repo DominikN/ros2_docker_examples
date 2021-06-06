@@ -338,3 +338,5 @@ docker-compose up
 ### Result:
 
 ![turtlesim](docs/screenshot.png)
+
+Note that we haven't modified `cyclonedds.xml` file, because we specified there hostnames of Husarnet containers (in `.env` file) insted of IPv6 address.
