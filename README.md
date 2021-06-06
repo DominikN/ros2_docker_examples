@@ -42,7 +42,7 @@ ROS 2 Foxy installed on your laptop is needed only for **[Eg. 0]** section.
 
 ## [Eg. 0] Running without Docker
 
-![without docker](docs/fig1-system-architecture.png)
+![use ROS 2 on host machine without Docker](docs/fig1-system-architecture.png)
 
 ```bash
 cd ros2_ws
@@ -57,7 +57,7 @@ ros2 launch my_turtle_bringup turtlesim_demo.launch.py
 
 ## [Eg. 1] Running in a single container
 
-![without docker](docs/fig2-one-container.png)
+![launch the whole ROS 2 app in a single Docker container](docs/fig2-one-container.png)
 
 **Please stay in `ros2_docker_examples/` directory while executing those commands:**
 
@@ -77,7 +77,7 @@ turtle_demo
 
 ## [Eg. 2] Running in two containers (using `docker-compose`)
 
-![without docker](docs/fig3-two-containers.png)
+![launch multi-container ROS 2 app using docker-compose](docs/fig3-two-containers.png)
 
 ```bash
 cd eg2
@@ -86,7 +86,7 @@ docker-compose up
 
 ## [Eg. 3] PROBLEM: Running on two computers in different networks
 
-![without docker](docs/fig4-two-containers-two-networks.png)
+![ROS 2 DDS discovery doesn't work if devices are in different networks](docs/fig4-two-containers-two-networks.png)
 
 Because two ROS 2 devices are in different networks, DDS can not perform auto-discovery.
 
@@ -98,6 +98,8 @@ To enable communication between remote containers we need to do two things:
 
 - install & configure Husarnet VPN client
 - create a custom DDS confiugration file
+
+![install VPN client inside ROS 2 docker container](docs/fig5a-solution.png)
 
 Ready to use example is available in `eg3/` folder. There are two separate subfolders with a `docker-compose.yml` file which should be launched on two separate devices from different networks.
 
@@ -170,12 +172,12 @@ docker-compose up
 
 Congrats! You have everything up and running.
 
-![without docker](docs/screenshot.png)
+![turtlesim](docs/screenshot.png)
 
 
 ## [Eg. 3] SOLUTION 2: Connecting container on your laptop with turtlesim in the ROSject
 
-![without docker](docs/fig5-sollution.png)
+![connect a ROSject with remote computer running ROS 2](docs/fig5-solution.png)
 
 
 ### TO DO on your laptop
@@ -285,7 +287,7 @@ docker-compose run
 
 In the ROSject (after you click `[Graphical tools]` button ) you will see:
 
-![without docker](docs/screenshot.png)
+![turtlesim window](docs/screenshot.png)
 
 ## [Eg. 4] Use a separate VPN container
 
@@ -295,7 +297,7 @@ Instead of modyfing your own containers, you can launch a separate official [Hus
 
 Moreover instead of long IPv6 addresses you can use Husarnet hostnames of the Husarnet Container (specified in `eg4/dev*/.env` files).
 
-![without docker](docs/fig6-sidecar-husarnet.png)
+![connect remote machines running ROS 2 app by using a separate VPN container](docs/fig6-sidecar-husarnet.png)
 
 That's a truely zero effort solution that simply works.
 
@@ -335,4 +337,4 @@ docker-compose up
 
 ### Result:
 
-![without docker](docs/screenshot.png)
+![turtlesim](docs/screenshot.png)
