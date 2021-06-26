@@ -4,7 +4,7 @@ services:
     turtle_controller:
         build:
             context: ../../
-            dockerfile: eg5/dev1/Dockerfile
+            dockerfile: eg6/dev1/Dockerfile
         volumes:
             - ./cyclonedds.xml:/cyclonedds.xml
         command:
