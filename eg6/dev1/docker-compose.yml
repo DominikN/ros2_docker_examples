@@ -1,0 +1,30 @@
+version: '2.3'
+
+services:
+    turtle_controller:
+        build:
+            context: ../../
+            dockerfile: eg5/dev1/Dockerfile
+        volumes:
+            - ./cyclonedds.xml:/cyclonedds.xml
+        command:
+            - bash
+            - -c
+            - |
+                source /ros2_ws/install/setup.bash
+                export CYCLONEDDS_URI=file:///cyclonedds.xml
+                ros2 launch my_turtle_bringup only_controller.launch.py
+    husarnet:
+        image: husarnet/husarnet
+        restart: unless-stopped
+        volumes:
+            - /var/lib/husarnet  # This will persist your Husarnet Client keys, thus IP of the container will be stable/the same between (re)boots
+        sysctls:
+            - net.ipv6.conf.all.disable_ipv6=0  # Husarnet is using IPv6 for the internal connections
+        cap_add:
+            - NET_ADMIN
+        devices:
+            - /dev/net/tun
+        env_file: 
+            - ./.env  # create .env file in the same folder as Dockerfile and specify HOSTNAME and JOINCODE there
+        network_mode: service:turtle_controller  # This is the most important line in this setup. This will put the Husarnet Client in the same network namespace as your app (in this example: turtle_sim)
