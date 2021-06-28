@@ -4,7 +4,7 @@ services:
     dds_updater:
         build: dds_update/.
         volumes:
-            - shared_cyclonedds_xml:/dds
+            - ./dds_update/dds:/dds
         network_mode: service:husarnet
         stdin_open: true # docker run -i
         tty: true        # docker run -t

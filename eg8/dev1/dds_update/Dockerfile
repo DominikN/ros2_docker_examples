@@ -1,7 +1,7 @@
 FROM python:3
 
 RUN mkdir /dds
-COPY ./cyclonedds.xml /dds
+COPY ./dds/cyclonedds.xml /dds
 WORKDIR /usr/src/app
 
 COPY requirements.txt ./
