@@ -1,9 +1,22 @@
 import os 
 import time
 import xml.etree.ElementTree as ET
+import xmltodict
+
 
 print("Hello World!")
 xml_file = os.path.join('/dds', 'cyclonedds.xml')
+
+with open(xml_file) as fd:
+    doc = xmltodict.parse(fd.read())
+
+print(doc)
+
+while True:
+    print(doc['CycloneDDS']['Domain']['Discovery']['Peers'])
+    print('number of peers' + str(len(doc['CycloneDDS']['Domain']['Discovery']['Peers']['Peer'])))
+    time.sleep(5)
+
 ET.register_namespace("", "https://cdds.io/config")
 
 tree = ET.parse(xml_file)
