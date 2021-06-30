@@ -2,9 +2,9 @@ version: '2.3'
 
 services:
     dds_updater:
-        build: dds_update/.
+        build: dds_updater/.
         volumes:
-            - ./dds_update/dds:/dds
+            - ./dds_updater/dds:/dds
         network_mode: service:husarnet
         stdin_open: true # docker run -i
         tty: true        # docker run -t
@@ -14,7 +14,7 @@ services:
             context: ../../
             dockerfile: eg8/dev1/Dockerfile
         volumes:
-            - ./dds_update/dds:/dds
+            - ./dds_updater/dds:/dds
         command:
             - bash
             - -c
@@ -29,7 +29,7 @@ services:
             context: ../../
             dockerfile: eg8/dev1/Dockerfile
         volumes:
-            - ./dds_update/dds:/dds
+            - ./dds_updater/dds:/dds
         command:
             - bash
             - -c
