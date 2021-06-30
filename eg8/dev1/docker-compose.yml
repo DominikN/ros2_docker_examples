@@ -12,7 +12,7 @@ services:
     color_controller:
         build:
             context: ../../
-            dockerfile: eg8/dev1/Dockerfile
+            dockerfile: eg8/dev1/turtle_controller/Dockerfile
         volumes:
             - ./dds_updater/dds:/dds
         command:
@@ -27,7 +27,7 @@ services:
     move_controller:
         build:
             context: ../../
-            dockerfile: eg8/dev1/Dockerfile
+            dockerfile: eg8/dev1/turtle_controller/Dockerfile
         volumes:
             - ./dds_updater/dds:/dds
         command:
