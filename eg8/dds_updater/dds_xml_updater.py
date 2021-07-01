@@ -3,7 +3,7 @@ import time
 import xmltodict
 import json
 
-xml_file = os.path.join('/dds', 'cyclonedds.xml')
+xml_file = os.path.join('/', 'cyclonedds.xml')
 
 while True:
     with open(xml_file, 'r') as fd:
@@ -14,7 +14,7 @@ while True:
     
     myjson = json.loads(json.dumps(doc, indent=2))
     
-    myjson['CycloneDDS']['Domain']['Discovery']['Peers'] = {'Peer':[]}
+    myjson['CycloneDDS']['Domain']['Discovery']['Peers'] = {'Peer':[{"@address": "fc94:0000:0000:0000:0000:0000:0000:0000"}]}
     
     with open('/etc/hosts','r') as hosts_file:
         for line in hosts_file:

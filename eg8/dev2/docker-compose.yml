@@ -1,6 +1,16 @@
 version: '2.3'
 
 services:
+    dds_updater:
+        build: 
+            context: ../
+            dockerfile: ./dds_updater/Dockerfile
+        volumes:
+            - ./cyclonedds.xml:/cyclonedds.xml  
+        network_mode: service:husarnet
+        stdin_open: true # docker run -i
+        tty: true        # docker run -t
+        
     turtle_sim:
         image: osrf/ros:galactic-desktop
         environment: 
@@ -8,6 +18,7 @@ services:
         volumes: 
             - /tmp/.X11-unix:/tmp/.X11-unix:rw
             - ./cyclonedds.xml:/cyclonedds.xml
+        network_mode: service:husarnet
         command: 
             - bash
             - -c
@@ -19,7 +30,7 @@ services:
         image: husarnet/husarnet
         restart: unless-stopped
         volumes:
-            - /var/lib/husarnet  # This will persist your Husarnet Client keys, thus IP of the container will be stable/the same between (re)boots
+            - test5:/var/lib/husarnet  # This will persist your Husarnet Client keys, thus IP of the container will be stable/the same between (re)boots
         sysctls:
             - net.ipv6.conf.all.disable_ipv6=0  # Husarnet is using IPv6 for the internal connections
         cap_add:
@@ -28,4 +39,6 @@ services:
             - /dev/net/tun
         env_file: 
             - ./.env  # create .env file in the same folder as Dockerfile and specify HOSTNAME and JOINCODE there
-        network_mode: service:turtle_sim  # This is the most important line in this setup. This will put the Husarnet Client in the same network namespace as your app (in this example: turtle_sim)
+
+volumes:
+    test5:

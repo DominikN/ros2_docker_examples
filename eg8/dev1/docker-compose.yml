@@ -4,9 +4,9 @@ services:
     dds_updater:
         build: 
             context: ../
-            dockerfile: dds_updater/Dockerfile
+            dockerfile: ./dds_updater/Dockerfile
         volumes:
-            - ../dds_updater/dds:/dds
+            - ./cyclonedds.xml:/cyclonedds.xml  #TODO: move cyclone dds xml file to dev1 and dev2 folders separately
         network_mode: service:husarnet
         stdin_open: true # docker run -i
         tty: true        # docker run -t
@@ -16,13 +16,13 @@ services:
             context: ../../
             dockerfile: eg8/dev1/turtle_controller/Dockerfile
         volumes:
-            - ../dds_updater/dds:/dds
+            - ./cyclonedds.xml:/cyclonedds.xml
         command:
             - bash
             - -c
             - |
                 source /ros2_ws/install/setup.bash
-                export CYCLONEDDS_URI=file:///dds/cyclonedds.xml
+                export CYCLONEDDS_URI=file:///cyclonedds.xml
                 ros2 run my_demo_pkg color_controller
         network_mode: service:husarnet
         
@@ -31,13 +31,13 @@ services:
             context: ../../
             dockerfile: eg8/dev1/turtle_controller/Dockerfile
         volumes:
-            - ../dds_updater/dds:/dds
+            - ./cyclonedds.xml:/cyclonedds.xml
         command:
             - bash
             - -c
             - |
                 source /ros2_ws/install/setup.bash
-                export CYCLONEDDS_URI=file:///dds/cyclonedds.xml
+                export CYCLONEDDS_URI=file:///cyclonedds.xml
                 ros2 run my_demo_pkg move_controller
         network_mode: service:husarnet
 

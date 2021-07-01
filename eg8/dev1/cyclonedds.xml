@@ -10,9 +10,8 @@
 		</General>
 		<Discovery>
 			<Peers>
-				<Peer address="fc94:0000:0000:0000:0000:0000:0000:0000"></Peer>
 				<Peer address="fc94:2389:fac2:0ddf:98b4:d48f:fed5:f286"></Peer>
-				<Peer address="fc94:2389:fac2:0ddf:98b4:d48f:fed5:f286"></Peer>
+				<Peer address="fc94:5587:cf8a:7fbd:316d:dee0:5a33:9f51"></Peer>
 				<Peer address="fc94:5587:cf8a:7fbd:316d:dee0:5a33:9f51"></Peer>
 				<Peer address="fc94:8d90:f138:a429:962c:f0c3:0f2f:d482"></Peer>
 				<Peer address="fc94:96fd:53a5:8477:2037:4150:0cc2:98ca"></Peer>
