@@ -2,9 +2,11 @@ version: '2.3'
 
 services:
     dds_updater:
-        build: dds_updater/.
+        build: 
+            context: ../
+            dockerfile: dds_updater/Dockerfile
         volumes:
-            - ./dds_updater/dds:/dds
+            - ../dds_updater/dds:/dds
         network_mode: service:husarnet
         stdin_open: true # docker run -i
         tty: true        # docker run -t
@@ -14,7 +16,7 @@ services:
             context: ../../
             dockerfile: eg8/dev1/turtle_controller/Dockerfile
         volumes:
-            - ./dds_updater/dds:/dds
+            - ../dds_updater/dds:/dds
         command:
             - bash
             - -c
@@ -29,7 +31,7 @@ services:
             context: ../../
             dockerfile: eg8/dev1/turtle_controller/Dockerfile
         volumes:
-            - ./dds_updater/dds:/dds
+            - ../dds_updater/dds:/dds
         command:
             - bash
             - -c

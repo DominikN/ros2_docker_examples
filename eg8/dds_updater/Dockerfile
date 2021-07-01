@@ -1,12 +1,12 @@
 FROM python:3
 
 RUN mkdir /dds
-COPY ./dds/cyclonedds.xml /dds
+COPY ./dds_updater/dds/cyclonedds.xml /dds
 WORKDIR /usr/src/app
 
-COPY requirements.txt ./
+COPY ./dds_updater/requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY ./dds_xml_updater.py .
+COPY ./dds_updater//dds_xml_updater.py .
 
 CMD [ "python", "./dds_xml_updater.py" ]
