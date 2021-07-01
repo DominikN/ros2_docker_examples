@@ -30,7 +30,7 @@ services:
         image: husarnet/husarnet
         restart: unless-stopped
         volumes:
-            - test5:/var/lib/husarnet  # This will persist your Husarnet Client keys, thus IP of the container will be stable/the same between (re)boots
+            - test8:/var/lib/husarnet  # This will persist your Husarnet Client keys, thus IP of the container will be stable/the same between (re)boots
         sysctls:
             - net.ipv6.conf.all.disable_ipv6=0  # Husarnet is using IPv6 for the internal connections
         cap_add:
@@ -41,4 +41,4 @@ services:
             - ./.env  # create .env file in the same folder as Dockerfile and specify HOSTNAME and JOINCODE there
 
 volumes:
-    test5:
+    test8:

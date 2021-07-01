@@ -14,7 +14,7 @@ while True:
     
     myjson = json.loads(json.dumps(doc, indent=2))
     
-    myjson['CycloneDDS']['Domain']['Discovery']['Peers'] = {'Peer':[{"@address": "fc94:0000:0000:0000:0000:0000:0000:0000"}]}
+    myjson['CycloneDDS']['Domain']['Discovery']['Peers'] = {'Peer':[{"@address": "fc94:b01d:1803:8dd8:b293:5c7d:7639:932a"}]}
     
     with open('/etc/hosts','r') as hosts_file:
         for line in hosts_file:
