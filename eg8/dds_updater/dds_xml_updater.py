@@ -14,12 +14,12 @@ while True:
     
     myjson = json.loads(json.dumps(doc, indent=2))
     
-    myjson['CycloneDDS']['Domain']['Discovery']['Peers'] = {'Peer':[{"@address": "fc94:b01d:1803:8dd8:b293:5c7d:7639:932a"}]}
+    myjson['CycloneDDS']['Domain']['Discovery']['Peers'] = {'Peer':[]}
     
     with open('/etc/hosts','r') as hosts_file:
         for line in hosts_file:
             if(line.split()[2:6] == ['#', 'managed', 'by', 'Husarnet']):
-                myjson['CycloneDDS']['Domain']['Discovery']['Peers']['Peer'].append({'@address': line.split()[0]})
+                myjson['CycloneDDS']['Domain']['Discovery']['Peers']['Peer'].append({'@address': '[' + line.split()[0] + ']'})
                 print('Husarnet IPv6: ' + str(line.split()[0]) + ' | Hostname: ' + str(line.split()[1]))
         hosts_file.close()
             

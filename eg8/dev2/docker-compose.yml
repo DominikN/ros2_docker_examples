@@ -8,6 +8,8 @@ services:
         volumes:
             - ./cyclonedds.xml:/cyclonedds.xml  
         network_mode: service:husarnet
+        depends_on:
+            - "husarnet"
         stdin_open: true # docker run -i
         tty: true        # docker run -t
         
@@ -19,6 +21,8 @@ services:
             - /tmp/.X11-unix:/tmp/.X11-unix:rw
             - ./cyclonedds.xml:/cyclonedds.xml
         network_mode: service:husarnet
+        depends_on:
+            - "husarnet"
         command: 
             - bash
             - -c
@@ -30,7 +34,7 @@ services:
         image: husarnet/husarnet
         restart: unless-stopped
         volumes:
-            - test8:/var/lib/husarnet  # This will persist your Husarnet Client keys, thus IP of the container will be stable/the same between (re)boots
+            - /var/lib/husarnet  # This will persist your Husarnet Client keys, thus IP of the container will be stable/the same between (re)boots
         sysctls:
             - net.ipv6.conf.all.disable_ipv6=0  # Husarnet is using IPv6 for the internal connections
         cap_add:
@@ -39,6 +43,3 @@ services:
             - /dev/net/tun
         env_file: 
             - ./.env  # create .env file in the same folder as Dockerfile and specify HOSTNAME and JOINCODE there
-
-volumes:
-    test8:
