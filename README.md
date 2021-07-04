@@ -81,7 +81,7 @@ ros2 launch my_turtle_bringup turtlesim_demo.launch.py
 
 ```bash
 cd eg2
-docker-compose up
+docker-compose up --build
 ```
 
 ## [Eg. 3] PROBLEM: Running on two computers in different networks
