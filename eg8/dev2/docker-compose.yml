@@ -7,11 +7,9 @@ services:
             dockerfile: ./dds_updater/Dockerfile
         volumes:
             - ./cyclonedds.xml:/cyclonedds.xml  
-        network_mode: service:husarnet
-        depends_on:
-            - "husarnet"
         stdin_open: true # docker run -i
         tty: true        # docker run -t
+        network_mode: service:husarnet
         
     turtle_sim:
         image: osrf/ros:galactic-desktop
@@ -20,15 +18,13 @@ services:
         volumes: 
             - /tmp/.X11-unix:/tmp/.X11-unix:rw
             - ./cyclonedds.xml:/cyclonedds.xml
-        network_mode: service:husarnet
-        depends_on:
-            - "husarnet"
         command: 
             - bash
             - -c
             - |
                 export CYCLONEDDS_URI=file:///cyclonedds.xml
                 ros2 run turtlesim turtlesim_node
+        network_mode: service:husarnet
 
     husarnet:
         image: husarnet/husarnet

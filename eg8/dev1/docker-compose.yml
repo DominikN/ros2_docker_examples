@@ -6,10 +6,10 @@ services:
             context: ../
             dockerfile: ./dds_updater/Dockerfile
         volumes:
-            - ./cyclonedds.xml:/cyclonedds.xml  #TODO: move cyclone dds xml file to dev1 and dev2 folders separately
-        network_mode: service:husarnet
+            - ./cyclonedds.xml:/cyclonedds.xml 
         stdin_open: true # docker run -i
         tty: true        # docker run -t
+        network_mode: service:husarnet
 
     color_controller:
         build:
