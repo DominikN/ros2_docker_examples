@@ -62,17 +62,17 @@ ros2 launch my_turtle_bringup turtlesim_demo.launch.py
 **Please stay in `ros2_docker_examples/` directory while executing those commands:**
 
 ```
-sudo chmod +x eg1/init-container.sh
 sudo chmod +x eg1/ros_entrypoint.sh
 
 docker build -t turtle_demo -f eg1/Dockerfile .
 
 xhost local:root
 
-docker run --rm -it \
+sudo docker run --rm -it \
 --env DISPLAY \
 --volume /tmp/.X11-unix:/tmp/.X11-unix:rw \
-turtle_demo
+turtle_demo \
+ros2 launch my_turtle_bringup turtlesim_demo.launch.py
 ```
 
 ## [Eg. 2] Running in two containers (using `docker-compose`)
