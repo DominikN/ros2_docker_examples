@@ -2,7 +2,7 @@
 <CycloneDDS xmlns="https://cdds.io/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/master/etc/cyclonedds.xsd">
     <Domain id="any">
         <General>
-            <NetworkInterfaceAddress>auto</NetworkInterfaceAddress>
+            <NetworkInterfaceAddress>hnet0</NetworkInterfaceAddress>
             <AllowMulticast>false</AllowMulticast>
             <MaxMessageSize>65500B</MaxMessageSize>
             <FragmentSize>4000B</FragmentSize>
@@ -10,7 +10,7 @@
         </General>      
         <Discovery>
             <Peers>
-                <Peer address="[fc94:a3ea:6ff1:cf7a:a763:38c1:3188:bd2e]"/>
+                <Peer address="fc94:406d:ec8a:1e7:6c06:4898:9d68:c6d0"/>
             </Peers>
             <ParticipantIndex>auto</ParticipantIndex>
         </Discovery>

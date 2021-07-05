@@ -92,12 +92,7 @@ Because two ROS 2 devices are in different networks, DDS can not perform auto-di
 
 Also devices can not reach each other because they do not have neither public nor static IP addresses and are behind Wi-Fi router NAT.
 
-## [Eg. 3] SOLUTION 1: Connecting ROS 2 machines using VPN
-
-To enable communication between remote containers we need to do two things:
-
-- install & configure Husarnet VPN client
-- create a custom DDS confiugration file
+## [Eg. 3] SOLUTION: Connecting ROS 2 machines using VPN
 
 ![install VPN client inside ROS 2 docker container](docs/fig5a-solution.png)
 
@@ -107,187 +102,85 @@ Ready to use example is available in `eg3/` folder. There are two separate subfo
 
 At first modify `eg3/dev1/.env` and `eg3/dev2/.env` files by providing the same Husarnet network Join Code there. 
 
+```
+JOINCODE=fc94:b01d:1803:8dd8:b293:5c7d:7639:932a/xxxxxxxxxxxxxxxxxxxxxx
+HOSTNAME=turtle-controller
+```
+
 You will find your Join Code at **https://app.husarnet.com  
  -> Click on the desired network  
  -> `Add element` button  
  -> `Join Code` tab** 
 
-Then go to `eg3/dev1/` folder on first machine, and `eg3/dev2` folder on second machine and execute:
+1. Start the first device:
 
 ```bash
-docker-compose up
+cd eg3/dev1
+docker-compose up --build
 ```
 
-You will see the following output log:
+After a while you should see your first device connected to the Husarnet network:
 
-```bash
-dominik@legion-y540:~/tech/ros2_docker_examples/eg3/dev1$ docker-compose up
-Starting dev1_turtle_controller_1 ... done
-Attaching to dev1_turtle_controller_1
-turtle_controller_1  | 
-turtle_controller_1  | ⏳ [1/2] Initializing Husarnet Client:
-turtle_controller_1  | waiting...
-turtle_controller_1  | waiting...
-turtle_controller_1  | waiting...
-turtle_controller_1  | success
-turtle_controller_1  | 
-turtle_controller_1  | 🔥 [2/2] Connecting to Husarnet network as "turtle-controller":
-turtle_controller_1  | [2216368] joining...
-turtle_controller_1  | [2218369] joining...
-turtle_controller_1  | done
-turtle_controller_1  | 
-turtle_controller_1  | *******************************************
-turtle_controller_1  | 💡 Tip
-turtle_controller_1  | IPv6 addr of this container is: fc94:a2cd:168a:1c7b:a135:e22f:e172:892f
-turtle_controller_1  | *******************************************
-```
+![IPv6 address of the first device](docs/eg3_dev1_dashboard.png)
 
-It will contain a IPv6 address of the device (like `fc94:a2cd:168a:1c7b:a135:e22f:e172:892f` from the log above). You will use that address to configure a Cyclone DDS in the next step.
-
-You can shutdown the container now by clicking **[ctrl + c]**
-
-### Configuring a Cyclone DDS
-
-In `cyclonedds.xml` file we need to specify a Husarnet VPN IPv6 address of all peers. So in `eg3/dev1/cyclonedds.xml` file you need to specify IPv6 addres of `dev1` device:
+2. Add the first device address to Peers list of the second device, by editing: `eg3/dev2/cyclonedds.xml` file:
 
 ```xml
-<Peers>
-    <Peer address="[fc94:c37a:c18e:bc90:9b0b:7144:f212:9743]"/>
-</Peers>
+...
+<Discovery>
+    <Peers>
+        <Peer address="fc94:bc6f:1c91:51d:b6b0:1702:290c:7ab7"/>
+    </Peers>
+    <ParticipantIndex>auto</ParticipantIndex>
+</Discovery>
+        ...
 ```
 
-Similarly modify `eg3/dev2/cyclonedds.xml` by specifying Husarnet IPv6 addr of `dev1` there.
-
-### Running the containers:
-
-Now go to `eg3/dev1/` and `eg3/dev2/` folders on two machines and run:
+3. Start the second device:
 
 ```bash
-xhost local:root # remember about this line on dev2
-
 cd eg3/dev2
-docker-compose build
-docker-compose up
+docker-compose up --build
 ```
 
-Congrats! You have everything up and running.
+You should see now two devices in the Dashboard:
 
-![turtlesim](docs/screenshot.png)
+![IPv6 address of the second device](docs/eg3_dev2_dashboard.png)
 
+Problem: turtle is not moving!
+Solution: while starting `dev1` we didn't new the IPv6 address of the second device, but we know it now.
 
-## [Eg. 3] SOLUTION 2: Connecting container on your laptop with turtlesim in the ROSject
+4. Kill `Docker-Compose` on the first device (`ctrl` + `c`). Add the seconds device address to the Peers list of the first device, by editing: `eg3/dev1/cyclonedds.xml` file:
 
-![connect a ROSject with remote computer running ROS 2](docs/fig5-solution.png)
+```xml
+...
+<Discovery>
+    <Peers>
+        <Peer address="fc94:406d:ec8a:1e7:6c06:4898:9d68:c6d0"/>
+    </Peers>
+    <ParticipantIndex>auto</ParticipantIndex>
+</Discovery>
+...
+```
 
-
-### TO DO on your laptop
+5. Restart the first device container and everything looks fine now:
 
 ```bash
 cd eg3/dev1
-docker-compose build
-docker-compose up
+docker-compose up --build
 ```
 
-and copy the container's Husarnet IPv6 address from an output log (or from a app.husarnet.com)
+![turtle is finally working on two devices](docs/eg3_turtle.png)
 
-### TO DO in the ROSject
 
-Create a new ROSject and run:
+-------
+It works, but there are a few things that we don't like:
 
-#### Terminal 1
+- we don't know IPv6 addressed of the containers before starting them. So we need to make a dummy start of the first container, just to get the IPv6 address to be written in `cyclonedds.xml` of the second container.
 
-```bash
-sudo husarnet daemon
-```
+- we need to modify containers that we already have to connect them over the Internet (installing VPN client within a containers)
 
-#### Terminal 2
-
-##### 1. Connecting your ROSject to the Husarnet network:
-
-```bash
-sudo husarnet join <joincode> rosject1
-```
-
-Copy your ROSject's Husarnet IPv6 address to this part of `eg3/dev1/cyclonedds.xml` file:
-
-```xml
-<Peers>
-    <Peer address="[fc94:c37a:c18e:bc90:9b0b:7144:f212:9743]"/>
-</Peers>
-```
-
-##### 2. Installing and configuring Cyclone DDS
-
-```
-sudo apt update
-sudo apt install ros-foxy-rmw-cyclonedds-cpp
-cd ~
-touch cyclonedds.xml
-```
-
-Copy the following XML to the `cyclonedds.xml` (in the ROSject):
-
-```xml
-<?xml version="1.0" encoding="UTF-8" ?>
-<CycloneDDS xmlns="https://cdds.io/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/master/etc/cyclonedds.xsd">
-    <Domain id="any">
-        <General>
-            <NetworkInterfaceAddress>auto</NetworkInterfaceAddress>
-            <AllowMulticast>false</AllowMulticast>
-            <MaxMessageSize>65500B</MaxMessageSize>
-            <FragmentSize>4000B</FragmentSize>
-            <Transport>udp6</Transport>
-        </General>      
-        <Discovery>
-            <Peers>
-                <Peer address="[fc94:f6ad:cabc:a059:2050:9b3b:7a7f:7524]"/>
-            </Peers>
-            <ParticipantIndex>auto</ParticipantIndex>
-        </Discovery>
-        <Internal>
-            <Watermarks>
-                <WhcHigh>500kB</WhcHigh>
-            </Watermarks>
-        </Internal>
-        <Tracing>
-            <Verbosity>severe</Verbosity>
-            <OutputFile>stdout</OutputFile>
-        </Tracing>
-    </Domain>
-</CycloneDDS>
-```
-
-In this line place the IPv6 address of the running container from your laptop.
-
-```xml
-<Peer address="[fc94:f6ad:cabc:a059:2050:9b3b:7a7f:7524]"/>
-```
-
-Save file and execute in the terminal:
-
-```bash
-source /opt/ros/foxy/setup.bash
-export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-export CYCLONEDDS_URI=file:///home/user/cyclonedds.xml
-```
-
-##### 3. Running the turtlesim node
-
-```bash
-ros2 run turtlesim turtlesim_node
-```
-
-and on your laptop start the container:
-
-```bash
-cd eg3/dev1
-docker-compose build
-docker-compose run
-```
-
-In the ROSject (after you click `[Graphical tools]` button ) you will see:
-
-![turtlesim window](docs/screenshot.png)
+We will fix those issues in the example number 4.s
 
 ## [Eg. 4] Using a separate VPN container
 
@@ -316,7 +209,7 @@ cd ros2_docker_examples/eg4/dev1
 # JOINCODE=fc94:b01d:1803:8dd8:b293:5c7d:7639:932a/tTZtwiqM59iXtnCWABUEKH
 # HOSTNAME=turtle-controller-1
 
-docker-compose up
+docker-compose up --build
 ```
 
 ### DEVICE 2
@@ -324,6 +217,8 @@ docker-compose up
 Clone this repo to the second device, then execute in the terminal:
 
 ```bash
+xhost local:root
+
 cd ros2_docker_examples/eg4/dev2
 
 # Add your own join code to the .env file in the current directory.
@@ -332,7 +227,7 @@ cd ros2_docker_examples/eg4/dev2
 # JOINCODE=fc94:b01d:1803:8dd8:b293:5c7d:7639:932a/tTZtwiqM59iXtnCWABUEKH
 # HOSTNAME=turtlesim-1
 
-docker-compose up
+docker-compose up --build
 ```
 
 ### Result:
@@ -340,3 +235,94 @@ docker-compose up
 ![turtlesim](docs/screenshot.png)
 
 Note that we haven't modified `cyclonedds.xml` file, because we specified there hostnames of Husarnet containers (in `.env` file) insted of IPv6 address.
+
+--------------------
+
+OK, pretty nice, but we still needed to create a custom Dockerfile even for just running a turtlesime. Our next goal is to find a way to do not build a special Docker Images "working with Husarnet", but run any existing ROS 2 image, by just applying the proper configuration in the `Docker Compose`.
+
+## [Eg. 5] Run VPN network without modyfing existing Docker images
+
+### DEVICE 1
+
+```bash
+cd ros2_docker_examples/eg5/dev1
+
+# Add your own join code to the .env file in the current directory.
+# Example .env file content:
+#
+# JOINCODE=fc94:b01d:1803:8dd8:b293:5c7d:7639:932a/tTZtwiqM59iXtnCWABUEKH
+# HOSTNAME=turtle-controller-2
+
+docker-compose up --build
+```
+
+### DEVICE 2
+
+Clone this repo to the second device, then execute in the terminal:
+
+```bash
+xhost local:root
+
+cd ros2_docker_examples/eg5/dev2
+
+# Add your own join code to the .env file in the current directory.
+# Example .env file content:
+#
+# JOINCODE=fc94:b01d:1803:8dd8:b293:5c7d:7639:932a/tTZtwiqM59iXtnCWABUEKH
+# HOSTNAME=turtlesim-2
+
+docker-compose up --build
+```
+
+### Result:
+
+The same :)
+
+--------------------
+
+OK, so we can run our system containing 3 containers on two machines. It's completely fine, but to make our system more understabable by only reading a `docker-compose.yml`, instead of running a single `turtle_controller` container, we can run all ROS nodes in the separate containers.
+
+## [Eg. 6] Running all ROS 2 nodes in separate containers
+
+### DEVICE 1
+
+```bash
+cd ros2_docker_examples/eg6/dev1
+
+# Add your own join code to the .env file in the current directory.
+# Example .env file content:
+#
+# JOINCODE=fc94:b01d:1803:8dd8:b293:5c7d:7639:932a/tTZtwiqM59iXtnCWABUEKH
+# HOSTNAME=turtle-controller-6
+
+docker-compose up --build
+```
+
+### DEVICE 2
+
+Clone this repo to the second device, then execute in the terminal:
+
+```bash
+xhost local:root
+
+cd ros2_docker_examples/eg6/dev2
+
+# Add your own join code to the .env file in the current directory.
+# Example .env file content:
+#
+# JOINCODE=fc94:b01d:1803:8dd8:b293:5c7d:7639:932a/tTZtwiqM59iXtnCWABUEKH
+# HOSTNAME=turtlesim-6
+
+docker-compose up --build
+```
+
+### Result:
+
+The same :)
+
+--------------------
+
+Our network works pretty well, configuration is nice, however if we would like to add 3rd device to the network, we would need to add new Peer's hostname in `cyclonedds.xml` files of 1st and 2nd device. In the next example we will introduce a separate `DDS updater` container that will update a Peer's list automatically by using `/etc/hosts` file being updated by Husarnet VPN.
+
+
+....TODO

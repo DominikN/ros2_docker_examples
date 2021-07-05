@@ -6,6 +6,7 @@ services:
             context: ../../
             dockerfile: eg4/dev1/Dockerfile
         command: ros2 launch my_turtle_bringup only_controller.launch.py
+        network_mode: service:husarnet  # This is the most important line in this setup. This will put the Husarnet Client in the same network namespace as your app (in this example: turtle_controller)
 
     husarnet:
         image: husarnet/husarnet
@@ -20,4 +21,3 @@ services:
             - /dev/net/tun
         env_file: 
             - ./.env  # create .env file in the same folder as Dockerfile and specify HOSTNAME and JOINCODE there
-        network_mode: service:turtle_controller  # This is the most important line in this setup. This will put the Husarnet Client in the same network namespace as your app (in this example: turtle_sim)

@@ -2,7 +2,7 @@
 <CycloneDDS xmlns="https://cdds.io/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/master/etc/cyclonedds.xsd">
     <Domain id="any">
         <General>
-            <NetworkInterfaceAddress>auto</NetworkInterfaceAddress>
+            <NetworkInterfaceAddress>hnet0</NetworkInterfaceAddress>
             <AllowMulticast>false</AllowMulticast>
             <MaxMessageSize>65500B</MaxMessageSize>
             <FragmentSize>4000B</FragmentSize>
@@ -10,8 +10,7 @@
         </General>      
         <Discovery>
             <Peers>
-                <Peer address="turtle-controller-1"/>
-                <!-- <Peer address="[IPv6 addr]"/> -->
+                <Peer address="turtle-controller-6"/>
             </Peers>
             <ParticipantIndex>auto</ParticipantIndex>
         </Discovery>

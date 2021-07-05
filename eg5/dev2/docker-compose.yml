@@ -2,7 +2,7 @@ version: '2.3'
 
 services:
     turtle_sim:
-        build: ./
+        image: osrf/ros:galactic-desktop
         environment: 
             - DISPLAY
         volumes: 
@@ -12,7 +12,6 @@ services:
             - bash
             - -c
             - |
-                export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
                 export CYCLONEDDS_URI=file:///cyclonedds.xml
                 ros2 run turtlesim turtlesim_node
 
