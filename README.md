@@ -284,6 +284,8 @@ OK, so we can run our system containing 3 containers on two machines. It's compl
 
 ## [Eg. 6] Running all ROS 2 nodes in separate containers
 
+![Running all ROS 2 nodes in separate containers](docs/fig7-sidecar-husarnet.png)
+
 ### DEVICE 1
 
 ```bash
