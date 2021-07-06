@@ -328,3 +328,7 @@ Our network works pretty well, configuration is nice, however if we would like t
 
 
 ....TODO
+
+## [Eg. 8] Introducing auto DDS update container
+
+![Introducing auto DDS update container](docs/fig8-sidecar-husarnet.png)
