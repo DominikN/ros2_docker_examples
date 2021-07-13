@@ -10,7 +10,7 @@
         </General>      
         <Discovery>
             <Peers>
-                <Peer address="turtlesim-4"/>
+                <Peer address="turtlesim"/>
             </Peers>
             <ParticipantIndex>auto</ParticipantIndex>
         </Discovery>

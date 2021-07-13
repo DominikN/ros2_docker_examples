@@ -10,7 +10,7 @@
         </General>      
         <Discovery>
             <Peers>
-                <Peer address="turtle-controller-5"/>
+                <Peer address="turtle-controller"/>
             </Peers>
             <ParticipantIndex>auto</ParticipantIndex>
         </Discovery>
