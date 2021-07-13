@@ -6,7 +6,7 @@ services:
             context: ../../
             dockerfile: eg3/dev1/Dockerfile
         volumes:
-            - husarnet-id-v:/var/lib/husarnet  # This will persist your Husarnet Client keys, thus IP of the container will be stable/the same between boots
+            - /var/lib/husarnet  # This will persist your Husarnet Client keys, thus IP of the container will be stable/the same between boots
         env_file: 
             - ./.env  # create .env file in the same folder as Dockerfile and specify HOSTNAME and JOINCODE there
         sysctls:
@@ -17,6 +17,4 @@ services:
             - /dev/net/tun
         stdin_open: true # docker run -i
         tty: true        # docker run -t
-
-volumes:
-    husarnet-id-v:
+        command: ros2 launch my_turtle_bringup only_controller.launch.py

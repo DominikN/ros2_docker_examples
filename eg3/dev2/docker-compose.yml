@@ -6,7 +6,7 @@ services:
             context: ../../
             dockerfile: eg3/dev2/Dockerfile
         volumes:
-            - husarnet-id2-v:/var/lib/husarnet  # This will persist your Husarnet Client keys, thus IP of the container will be stable/the same between boots
+            - /var/lib/husarnet  # This will persist your Husarnet Client keys, thus IP of the container will be stable/the same between boots
             - /tmp/.X11-unix:/tmp/.X11-unix:rw
         environment: 
             - DISPLAY
@@ -20,6 +20,4 @@ services:
             - /dev/net/tun
         stdin_open: true # docker run -i
         tty: true        # docker run -t
-
-volumes:
-    husarnet-id2-v:
+        command: ros2 run turtlesim turtlesim_node
