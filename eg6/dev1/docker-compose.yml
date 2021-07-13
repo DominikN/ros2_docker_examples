@@ -11,7 +11,6 @@ services:
             - bash
             - -c
             - |
-                source /ros2_ws/install/setup.bash
                 export CYCLONEDDS_URI=file:///cyclonedds.xml
                 ros2 run my_demo_pkg color_controller
         network_mode: service:husarnet
@@ -26,7 +25,6 @@ services:
             - bash
             - -c
             - |
-                source /ros2_ws/install/setup.bash
                 export CYCLONEDDS_URI=file:///cyclonedds.xml
                 ros2 run my_demo_pkg move_controller
         network_mode: service:husarnet
